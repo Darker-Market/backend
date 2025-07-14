@@ -1,5 +1,6 @@
 import { Router, Request, Response } from "express";
 import axios from "axios";
+import { Item } from "../types/items";
 
 const router = Router();
 
@@ -10,9 +11,18 @@ router.get("/", async (req: Request, res: Response) => {
 
     const response = await axios.get(externalUrl);
 
-    console.log(response.data);
+    const allItems: Item[] = response.data.body;
+    const itemsWithIcons = allItems.map((item) => ({
+      ...item,
+      iconUrl: `https://api.darkerdb.com/v1/items/${item.item_id}/icon`,
+    }));
 
-    res.json(response.data);
+    console.log(itemsWithIcons);
+
+    res.json({
+      ...response.data,
+      body: itemsWithIcons,
+    });
   } catch (err) {
     console.error(err);
     res.status(500).json({ error: "Failed to fetch " });
