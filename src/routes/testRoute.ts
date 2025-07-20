@@ -36,9 +36,6 @@ router.get("/", async (req: Request, res: Response) => {
           return {
             ...item,
             iconUrl: `${baseUrl}/items/${item.item_id}/icon`,
-            description: null,
-            stats: null,
-            type: null,
           };
         }
       })
