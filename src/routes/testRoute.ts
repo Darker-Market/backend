@@ -7,20 +7,23 @@ const router = Router();
 router.get("/", async (req: Request, res: Response) => {
   try {
     const apiKey = process.env.DARKER_API;
-    const externalUrl = `https://api.darkerdb.com/v1/market?key=${apiKey}&condense=true&limit=5`;
+    // condense=true&
+    const baseUrl = "https://api.darkerdb.com/v1";
 
-    const response = await axios.get(externalUrl);
+    const externalUrl = `${baseUrl}/market?key=${apiKey}&limit=5`;
 
-    const allItems: Item[] = response.data.body;
+    const marketResponse = await axios.get(externalUrl);
+    const allItems: Item[] = marketResponse.data.body;
+
     const itemsWithIcons = allItems.map((item) => ({
       ...item,
-      iconUrl: `https://api.darkerdb.com/v1/items/${item.item_id}/icon`,
+      iconUrl: `${baseUrl}/items/${item.item_id}/icon`,
     }));
 
     console.log(itemsWithIcons);
 
     res.json({
-      ...response.data,
+      ...marketResponse.data,
       body: itemsWithIcons,
     });
   } catch (err) {
