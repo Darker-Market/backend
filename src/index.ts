@@ -15,7 +15,7 @@ app.use(
 app.use(express.json());
 
 app.get("/", (_req, res) => {
-  res.send("Hello from TypeScript + Express!");
+  res.send("connected");
 });
 
 app.use("/api/test", test);

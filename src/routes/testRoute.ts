@@ -36,6 +36,7 @@ router.get("/", async (req: Request, res: Response) => {
             slot_type: details.slot_type,
             utility_type: details.utility_type,
             required_class: details.required_class,
+            effect: details.effect,
             // type, armor_type, hand_type, misc_type, slot_type, utility_type, required_class, effect?
           };
         } catch (err) {
