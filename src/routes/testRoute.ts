@@ -21,14 +21,21 @@ router.get("/", async (req: Request, res: Response) => {
           const itemDetailRes = await axios.get(
             `${baseUrl}/items/${item.item_id}?key=${apiKey}`
           );
-          const details = itemDetailRes.data;
+          const details = itemDetailRes.data.body;
 
-          // console.log(details);
+          console.log(details);
 
           return {
             ...item,
             iconUrl: `${baseUrl}/items/${item.item_id}/icon`,
-            description: details.body.description,
+            description: details.description,
+            type: details.type,
+            armor_type: details.armor_type,
+            hand_type: details.hand_type,
+            misc_type: details.misc_type,
+            slot_type: details.slot_type,
+            utility_type: details.utility_type,
+            required_class: details.required_class,
             // type, armor_type, hand_type, misc_type, slot_type, utility_type, required_class, effect?
           };
         } catch (err) {
