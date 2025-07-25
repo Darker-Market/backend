@@ -1,6 +1,7 @@
 import { Router, Request, Response } from "express";
 import axios from "axios";
 import { Item } from "../types/items";
+import { getTimeUntilExpiry } from "../utils/dateHelpers";
 
 const router = Router();
 
@@ -23,7 +24,10 @@ router.get("/", async (req: Request, res: Response) => {
           );
           const details = itemDetailRes.data.body;
 
-          console.log(details);
+          const expires_in = getTimeUntilExpiry(
+            item.created_at,
+            item.expires_at
+          );
 
           return {
             ...item,
@@ -37,6 +41,7 @@ router.get("/", async (req: Request, res: Response) => {
             utility_type: details.utility_type,
             required_class: details.required_class,
             effect: details.effect,
+            expires_in,
             // type, armor_type, hand_type, misc_type, slot_type, utility_type, required_class, effect?
           };
         } catch (err) {
