@@ -11,7 +11,7 @@ router.get("/", async (req: Request, res: Response) => {
     // condense=true&
     const baseUrl = "https://api.darkerdb.com/v1";
 
-    const marketUrl = `${baseUrl}/market?key=${apiKey}&limit=5`;
+    const marketUrl = `${baseUrl}/market?key=${apiKey}&limit=10`;
 
     const marketResponse = await axios.get(marketUrl);
     const allItems: Item[] = marketResponse.data.body;
